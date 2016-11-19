@@ -1,10 +1,10 @@
 package stars
 
-class Puzzle private (engine: Engine, cells: Vector[Vector[Int]]) {
-  def this (engine: Engine, regions: RegionSet) =
-    this (engine, engine.axis.map (r => engine.axis.map (c => regions.allocation ((r, c)).get.uniqueID)))
+import Engine._
 
-  import engine._
+class Puzzle private (cells: Vector[Vector[Int]]) {
+  def this (regions: RegionSet) =
+    this (axis.map (r => axis.map (c => regions.allocation ((r, c)).get.uniqueID)))
 
   val regions: Vector[Int] =
     cells.flatten.distinct

@@ -5,15 +5,13 @@ import java.awt.Color._
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
-import Types._
+import Engine._
 
-class Output (configuration: Engine) {
-  import configuration._
-
-  def drawPuzzle (puzzle: Puzzle, file: String) = {
+object Output {
+  def drawPuzzle (puzzle: Puzzle, file: File): Boolean = {
     val canvas = new BufferedImage (cellPixels * size + 1, cellPixels * size + 1, BufferedImage.TYPE_INT_RGB)
     val graphics = canvas.createGraphics
-    import graphics.{dispose, setColor, fillRect, drawLine}
+    import graphics.{dispose, drawLine, fillRect, setColor}
 
     def line (x1: Int, y1: Int, width: Int, height: Int, colour: Color) = {
       setColor (colour)
@@ -32,13 +30,13 @@ class Output (configuration: Engine) {
     line (size * cellPixels, 0, 0, size * cellPixels, BLACK)
 
     dispose ()
-    ImageIO.write (canvas, "png", new File (file))
+    ImageIO.write (canvas, "png", file)
   }
 
-  def drawSolution (puzzle: Puzzle, partial: Partial, file: String) = {
+  def drawSolution (puzzle: Puzzle, partial: Solution, file: File): Boolean = {
     val canvas = new BufferedImage (cellPixels * size + 1, cellPixels * size + 1, BufferedImage.TYPE_INT_RGB)
     val graphics = canvas.createGraphics
-    import graphics.{dispose, setColor, fillRect, drawLine}
+    import graphics.{dispose, drawLine, fillRect, setColor}
 
     def line (x1: Int, y1: Int, width: Int, height: Int, colour: Color) = {
       setColor (colour)
@@ -59,14 +57,14 @@ class Output (configuration: Engine) {
         if (row == 0 || puzzle.regionAt (row, column) != puzzle.regionAt (row - 1, column)) BLACK else LIGHT_GRAY)
       line (column * cellPixels, row * cellPixels, 0, cellPixels,
         if (column == 0 || puzzle.regionAt (row, column) != puzzle.regionAt (row, column - 1)) BLACK else LIGHT_GRAY)
-      if (partial (row)(column) == StarCell)
+      if (partial (row)(column))
         star (column * cellPixels + cellPixels / 2, row * cellPixels + cellPixels / 2, cellPixels - 4)
     }
     line (0, size * cellPixels, size * cellPixels, 0, BLACK)
     line (size * cellPixels, 0, 0, size * cellPixels, BLACK)
 
     dispose ()
-    ImageIO.write (canvas, "png", new File (file))
+    ImageIO.write (canvas, "png", file)
   }
 
   def puzzleToString (puzzle: Puzzle) = {

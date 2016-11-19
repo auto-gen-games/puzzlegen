@@ -1,6 +1,5 @@
-/**
-  * Created by simon on 18/11/2016.
-  */
 package object stars {
-
+  type Partial = Vector[Vector[CellSolutionState]]
+  type Hypothesis = (Int, Int, CellHypothesis)
+  type Solution = Vector[Vector[Boolean]]
 }

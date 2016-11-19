@@ -1,10 +1,8 @@
 package stars
 
-import Types._
+import Engine._
 
-class Solve (engine: Engine) {
-  import engine._
-
+object Solve {
   def validChange (puzzle: Puzzle, newPartial: Partial, row: Int, column: Int): Boolean =
     regionPotentialStars (puzzle, newPartial, puzzle.regionAt (row, column)) >= stars &&
       regionStars (puzzle, newPartial, puzzle.regionAt (row, column)) <= stars &&

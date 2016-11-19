@@ -1,15 +1,15 @@
 package takefive
 
+import scala.util.Random
 import takefive.Constants._
 import takefive.Solver.solve
-import scala.util.Random.{nextInt, shuffle}
 
 object Generater {
-  def generate: Puzzle = {
+  def generate (chooser: Random): (Puzzle, Solution) = {
     def generateSolution: Solution = {
       def generateSolutionFrom (precedingRows: Vector[Vector[Int]]): Option[Solution] = {
         val transposed = precedingRows.transpose
-        val unfilteredOptions = Vector.fill (9)(shuffle (cellPossibilities.toVector))
+        val unfilteredOptions = Vector.fill (9)(chooser.shuffle (cellPossibilities.toVector))
         val columnOptions =
           if (precedingRows.nonEmpty)
             positions.map (col => unfilteredOptions (col).filter (v => !transposed (col).contains (v)))
@@ -34,7 +34,7 @@ object Generater {
     def generateValidPuzzle (expected: Solution): Puzzle = {
       def generatePuzzle: Puzzle = {
         def reduceToFive (values: Vector[Int]): Vector[Int] =
-          if (values.size == 5) values else reduceToFive (values.patch (nextInt (values.size), Nil, 1))
+          if (values.size == 5) values else reduceToFive (values.patch (chooser.nextInt (values.size), Nil, 1))
         new Puzzle (expected.map (reduceToFive), expected.transpose.map (reduceToFive))
       }
       val puzzle = generatePuzzle
@@ -43,6 +43,7 @@ object Generater {
       if (solutions.size == 1) puzzle else generateValidPuzzle (expected)
     }
 
-    generateValidPuzzle (generateSolution)
+    val solution = generateSolution
+    (generateValidPuzzle (solution), solution)
   }
 }

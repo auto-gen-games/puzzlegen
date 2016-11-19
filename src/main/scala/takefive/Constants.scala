@@ -5,5 +5,4 @@ object Constants {
   val positions: Vector[Int] = (0 to 8).toVector
   val coordinates: Vector[(Int, Int)] = positions.flatMap (row => positions.map (column => (row, column)))
   val cellPixels: Int = 10
-  type Solution = Vector[Vector[Int]]
 }
