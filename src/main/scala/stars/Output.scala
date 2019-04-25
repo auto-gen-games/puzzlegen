@@ -5,9 +5,11 @@ import java.awt.Color._
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
-import Engine._
+import stars.Constants.{cellPixels, grid}
 
 object Output {
+  import grid._
+
   def drawPuzzle (puzzle: Puzzle, file: File): Boolean = {
     val canvas = new BufferedImage (cellPixels * size + 1, cellPixels * size + 1, BufferedImage.TYPE_INT_RGB)
     val graphics = canvas.createGraphics

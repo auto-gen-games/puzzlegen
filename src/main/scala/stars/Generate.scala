@@ -1,9 +1,11 @@
 package stars
 
 import scala.util.Random
-import stars.Engine._
+import stars.Constants.{grid, stars}
 
 object Generate extends App {
+  import grid._
+
   def generate (chooser: Random): (Puzzle, Solution) = {
     def nonAdjacent (ys: Iterable[Int]): Vector[Int] =
       axis.filter (y => !ys.exists (previous => (previous - y).abs <= 1))

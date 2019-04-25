@@ -1,8 +1,10 @@
 package stars
 
-import Engine._
+import Constants.{grid, stars}
 
 object Solve {
+  import grid._
+
   def validChange (puzzle: Puzzle, newPartial: Partial, row: Int, column: Int): Boolean =
     regionPotentialStars (puzzle, newPartial, puzzle.regionAt (row, column)) >= stars &&
       regionStars (puzzle, newPartial, puzzle.regionAt (row, column)) <= stars &&

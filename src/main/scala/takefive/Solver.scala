@@ -3,6 +3,8 @@ package takefive
 import Constants._
 
 object Solver {
+  import grid._
+
   /** Returns true if the given cell value is known to be in a particular position in the given length of possibilities */
   def certain (value: Int, length: Vector[Set[Int]]): Boolean =
     length.exists (set => set.size == 1 && set.head == value)

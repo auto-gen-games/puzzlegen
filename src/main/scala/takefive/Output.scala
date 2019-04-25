@@ -8,6 +8,8 @@ import javax.imageio.ImageIO
 import takefive.Constants._
 
 object Output {
+  import grid._
+
   def drawPuzzle (puzzle: Puzzle, file: File): Boolean = {
     val canvas = new BufferedImage (cellPixels * 14 + 1, cellPixels * 14 + 1, BufferedImage.TYPE_INT_RGB)
     val graphics = canvas.createGraphics
@@ -20,11 +22,11 @@ object Output {
 
     setColor (WHITE)
     fillRect (0, 0, canvas.getWidth, canvas.getHeight)
-    for (row <- positions; column <- positions) {
+    for (row <- axis; column <- axis) {
       line ((column + 5) * cellPixels, (row + 5) * cellPixels, cellPixels, 0, BLACK)
       line ((column + 5) * cellPixels, (row + 5) * cellPixels, 0, cellPixels, BLACK)
     }
-    for (index <- positions; order <- 0 to 4) {
+    for (index <- axis; order <- 0 to 4) {
       drawString (puzzle.row (index)(order).toString, order * cellPixels, (index + 6) * cellPixels)
       drawString (puzzle.column (index)(order).toString, (index + 5) * cellPixels, (order + 1) * cellPixels)
     }
@@ -48,7 +50,7 @@ object Output {
     setColor (WHITE)
     fillRect (0, 0, canvas.getWidth, canvas.getHeight)
     setColor (BLACK)
-    for (row <- positions; column <- positions) {
+    for (row <- axis; column <- axis) {
 //      line (column * cellPixels, row * cellPixels, cellPixels, 0, BLACK)
 //      line (column * cellPixels, row * cellPixels, 0, cellPixels, BLACK)
       drawString (solution (row)(column).toString, column * cellPixels, (row + 1) * cellPixels)

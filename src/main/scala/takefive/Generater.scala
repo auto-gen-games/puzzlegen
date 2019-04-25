@@ -5,6 +5,8 @@ import takefive.Constants._
 import takefive.Solver.solve
 
 object Generater {
+  import grid._
+
   def generate (chooser: Random): (Puzzle, Solution) = {
     def generateSolution: Solution = {
       def generateSolutionFrom (precedingRows: Vector[Vector[Int]]): Option[Solution] = {
@@ -12,9 +14,9 @@ object Generater {
         val unfilteredOptions = Vector.fill (9)(chooser.shuffle (cellPossibilities.toVector))
         val columnOptions =
           if (precedingRows.nonEmpty)
-            positions.map (col => unfilteredOptions (col).filter (v => !transposed (col).contains (v)))
+            axis.map (col => unfilteredOptions (col).filter (v => !transposed (col).contains (v)))
           else
-            positions.map (unfilteredOptions)
+            axis.map (unfilteredOptions)
 
         def generateRowFrom (precedingCells: Vector[Int]): Option[Vector[Int]] = {
           def generateFromCell (cellOptions: Vector[Int]): Option[Vector[Int]] =

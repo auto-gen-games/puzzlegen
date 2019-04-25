@@ -1,10 +1,12 @@
 package stars
 
-import Engine._
+import Constants.grid
 
 class Puzzle private (cells: Vector[Vector[Int]]) {
   def this (regions: RegionSet) =
-    this (axis.map (r => axis.map (c => regions.allocation ((r, c)).get.uniqueID)))
+    this (grid.axis.map (r => grid.axis.map (c => regions.allocation ((r, c)).get.uniqueID)))
+
+  import grid._
 
   val regions: Vector[Int] =
     cells.flatten.distinct
